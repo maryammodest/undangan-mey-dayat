@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Generator Undangan Mey & Dayat</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+            background: #f4eee7;
+            color: #4b4038;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 500px;
+            background: #fffdf9;
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(70, 50, 35, .12);
+        }
+
+        .eyebrow {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #a77d48;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #786b60;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d8c8b8;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 18px;
+            background: white;
+        }
+
+        input:focus {
+            border-color: #a77d48;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .generate-btn {
+            background: #5a4637;
+            color: white;
+        }
+
+        .generate-btn:hover {
+            background: #46362b;
+        }
+
+        .result {
+            display: none;
+            margin-top: 28px;
+            padding-top: 25px;
+            border-top: 1px solid #e1d5c8;
+        }
+
+        .result h2 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        .link-box {
+            background: #f4eee7;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            word-break: break-all;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .copy-btn {
+            background: #c0a184;
+            color: white;
+        }
+
+        .wa-btn {
+            background: #6b5543;
+            color: white;
+        }
+
+        .success {
+            text-align: center;
+            color: #8b6a48;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="eyebrow">MEY & DAYAT</div>
+
+        <h1>Generator Undangan</h1>
+
+        <p class="intro">
+            Masukkan nama tamu untuk membuat link undangan
+            personal dan pesan WhatsApp otomatis.
+        </p>
+
+        <label for="namaTamu">Nama Tamu</label>
+
+        <input
+            type="text"
+            id="namaTamu"
+            placeholder="Contoh: Caca"
+        >
+
+        <label for="nomorWA">Nomor WhatsApp</label>
+
+        <input
+            type="text"
+            id="nomorWA"
+            placeholder="Contoh: 628123456789"
+        >
+
+        <button class="generate-btn" onclick="buatUndangan()">
+            Buat Link Undangan
+        </button>
+
+
+        <div class="result" id="result">
+
+            <h2>Link Berhasil Dibuat 🤎</h2>
+
+            <div class="link-box" id="linkUndangan"></div>
+
+            <button class="copy-btn" onclick="salinLink()">
+                Salin Link Undangan
+            </button>
+
+            <button class="wa-btn" onclick="kirimWhatsApp()">
+                Kirim via WhatsApp 💌
+            </button>
+
+            <div class="success" id="success"></div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    let linkPersonal = "";
+    let linkWhatsApp = "";
+
+
+    function buatUndangan() {
+
+        const nama = document
+            .getElementById("namaTamu")
+            .value
+            .trim();
+
+        const nomor = document
+            .getElementById("nomorWA")
+            .value
+            .trim();
+
+
+        if (!nama) {
+            alert("Masukkan nama tamu terlebih dahulu 🤎");
+            return;
+        }
+
+
+        const namaEncoded = encodeURIComponent(nama);
+
+
+        linkPersonal =
+            "https://maryammodest.github.io/undangan-mey-dayat/?to="
+            + namaEncoded;
+
+
+    const pesan =
+`Assalamu'alaikum Wr. Wb.
+
+Kepada Yth.
+${nama}
+
+Tanpa mengurangi rasa hormat, kami bermaksud mengundang ${nama} untuk hadir dalam acara pernikahan kami.
+
+Mey & Dayat
+09 September 2026
+
+Untuk informasi selengkapnya mengenai waktu, tempat, dan rangkaian acara, silakan membuka undangan digital kami melalui link berikut:
+
+${linkPersonal}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila ${nama} berkenan hadir serta memberikan doa dan restu untuk pernikahan kami.
+
+Terima kasih atas perhatian dan doanya.
+
+Wassalamu'alaikum Wr. Wb.`;
+
+
+        linkWhatsApp =
+            "https://wa.me/"
+            + nomor.replace(/\D/g, "")
+            + "?text="
+            + encodeURIComponent(pesan);
+
+
+        document.getElementById("linkUndangan").textContent =
+            linkPersonal;
+
+        document.getElementById("result").style.display = "block";
+
+        document.getElementById("success").textContent =
+            "Link personal untuk " + nama + " sudah siap 🤎";
+    }
+
+
+    function salinLink() {
+
+        navigator.clipboard.writeText(linkPersonal);
+
+        document.getElementById("success").textContent =
+            "✓ Link berhasil disalin 🤎";
+    }
+
+
+    function kirimWhatsApp() {
+
+        if (!linkPersonal) {
+            alert("Buat link undangan terlebih dahulu 🤎");
+            return;
+        }
+
+        window.open(linkWhatsApp, "_blank");
+    }
+
+</script>
+
+</body>
+</html>
